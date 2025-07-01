@@ -5,6 +5,7 @@ import config from "@/config/aws";
 import React, { useContext, useState, ReactNode } from "react";
 import { signIn } from "aws-amplify/auth";
 import message from "@/config/message";
+import { getCurrentUser } from "aws-amplify/auth"; // 追加
 
 // Amplify 設定
 Amplify.configure(config, { ssr: true });
@@ -42,6 +43,22 @@ type AuthProviderProps = {
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<{ email: string } | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
+
+  // 初期化：現在のユーザーを取得
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { username } = await getCurrentUser();
+        setUser({ email: username });
+      } catch {
+        // 未ログインの場合は何もしない
+      } finally {
+        setIsLoading(false); // ここでローディング終了
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const login = async (
     email: string,
