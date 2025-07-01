@@ -10,11 +10,11 @@ export default function SignInForm() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = await login(email, password);
     if (!result.isSuccessed) {
-      setError(result.errorMessage);
+      setError(result.errorMessage ?? "");
     } else {
       // ログイン成功後の処理（例: リダイレクト）
       router.push("/");
