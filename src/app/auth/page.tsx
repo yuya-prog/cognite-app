@@ -21,24 +21,38 @@ export default function SignInForm() {
     }
   };
 
+  // 新規登録ページへ遷移する関数
+  const handleGoSignup = () => {
+    router.push("/auth/signup");
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="メールアドレス"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="パスワード"
-        required
-      />
-      <button type="submit">ログイン</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="メールアドレス"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="パスワード"
+          required
+        />
+        <button type="submit">ログイン</button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </form>
+      <button
+        type="button"
+        onClick={handleGoSignup}
+        style={{ marginTop: "1rem" }}
+      >
+        新規登録
+      </button>
+    </>
   );
 }
